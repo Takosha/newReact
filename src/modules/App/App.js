@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import * as S from './styled.js'
+import { connect } from 'react-redux';
 import { Link, withRouter } from "react-router-dom";
+import { onLogin } from '../../redux/actions'
+
+
 
 
 class App extends Component {
   state = {
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     passwordConfirmation: '',
@@ -14,6 +20,7 @@ class App extends Component {
       passwordConfirmation: '',
     },
   }
+
 
   Validation = (event) => {
     const e = event;
@@ -49,6 +56,13 @@ class App extends Component {
     return errors;
 
   }
+  handleLogin = () => {
+    const { errors, email, password } = this.state;
+    if (!errors.email && !errors.password && email && password) {
+      this.props.onLogin({ email, password });
+      this.props.history.push('/about')
+    }
+  }
 
   handleInput = (e) => {
     const updates = {};
@@ -56,22 +70,32 @@ class App extends Component {
 
     updates.errors = this.Validation(e)
     this.setState(updates)
+
   }
 
   onButtonClick = () => {
     const users = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
       passwordConfirmation: this.state.passwordConfirmation,
     }
 
+
     this.setState({
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       passwordConfirmation: '',
       users,
     })
-    console.log(this.state)
+
+    localStorage.setItem('email', this.state.email)
+    localStorage.setItem('firstName', this.state.firstName)
+    localStorage.setItem('lastName', this.state.lastName)
+
   }
 
   DisabledButton = () => {
@@ -86,11 +110,38 @@ class App extends Component {
       password,
       passwordConfirmation,
       errors,
+      firstName,
+      lastName,
+
     } = this.state
     return (
       <S.Container>
         <S.Title>Register</S.Title>
         <S.FormContainer>
+
+          <S.Label>First Name</S.Label>
+          <S.Input
+            placeholder='First Name'
+            value={firstName}
+            onChange={this.handleInput}
+            id='firstName'
+            type='text'
+          ></S.Input>
+
+          <S.Label>Last Name</S.Label>
+
+          <S.Input
+            placeholder='Last name'
+            value={lastName}
+            onChange={this.handleInput}
+            id='lastName'
+            type='text'
+
+
+          ></S.Input>
+
+
+
           <S.Label error={errors.email}>Email</S.Label>
           <S.Input
             error={errors.email}
@@ -98,6 +149,7 @@ class App extends Component {
             id='email'
             onChange={this.handleInput}
             type='text'
+
           ></S.Input>
         </S.FormContainer>
         {errors.email && <S.InputError>{errors.email}</S.InputError>}
@@ -126,12 +178,19 @@ class App extends Component {
         <Link to='/about'>
           <S.LoginButton
             // disabled={this.DisabledButton()}
-            onClick={this.onButtonClick}>Register</S.LoginButton>
+            onClick={this.handleLogin}>Register</S.LoginButton>
         </Link>
         <Link to='/about'>Register</Link>
       </S.Container>
+
     );
   }
 }
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
 
-export default withRouter(App);
+const mapDispatchToProps = {
+  onLogin,
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
