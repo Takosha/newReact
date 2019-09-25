@@ -29,7 +29,7 @@ export const Input = styled.input`
     }
 `
 
-export const LoginButton = styled.button`
+export const Button = styled.button`
     margin-top: 5px;
     
 `
@@ -38,4 +38,7 @@ export const InputError = styled.span`
     color: red;
     font-size: 12px;
     font-weight: 600;
+`
+export const Modal = styled.div`
+opacity: 0.7;
 `

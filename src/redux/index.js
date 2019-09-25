@@ -1,6 +1,6 @@
 
 import { createStore } from 'redux'
-import { LOGIN } from './actions'
+import { LOGIN, OPEN_MODAL, CLOSE_MODAL } from './actions'
 
 
 
@@ -9,18 +9,33 @@ const initialState = {
 };
 
 
-const App = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
         case LOGIN:
             return {
                 ...state,
                 user: action.payload,
             }
+
+        case OPEN_MODAL:
+            return {
+                ...state,
+                isModalOpen: true,
+            }
+
+
+        case CLOSE_MODAL:
+            return {
+                ...state,
+                isModalOpen: false,
+            }
         default:
-            return state
+            return state;
     }
+
+
 }
 
-const store = createStore(App);
+const store = createStore(reducer);
 
 export default store;

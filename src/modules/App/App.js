@@ -9,10 +9,10 @@ import { onLogin } from '../../redux/actions'
 
 class App extends Component {
   state = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    // firstName: '',
+    // lastName: '',
+    email: this.props.user.email || '',
+    password: this.props.user.password || '',
     passwordConfirmation: '',
     errors: {
       email: '',
@@ -119,7 +119,7 @@ class App extends Component {
         <S.Title>Register</S.Title>
         <S.FormContainer>
 
-          <S.Label>First Name</S.Label>
+          {/* <S.Label>First Name</S.Label>
           <S.Input
             placeholder='First Name'
             value={firstName}
@@ -138,7 +138,7 @@ class App extends Component {
             type='text'
 
 
-          ></S.Input>
+          ></S.Input> */}
 
 
 
@@ -176,9 +176,9 @@ class App extends Component {
         </S.FormContainer>
         {errors.passwordConfirmation && <S.InputError>{errors.passwordConfirmation}</S.InputError>}
         <Link to='/about'>
-          <S.LoginButton
+          <S.Button
             // disabled={this.DisabledButton()}
-            onClick={this.handleLogin}>Register</S.LoginButton>
+            onClick={this.handleLogin}>Register</S.Button>
         </Link>
         <Link to='/about'>Register</Link>
       </S.Container>
