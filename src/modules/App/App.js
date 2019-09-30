@@ -9,8 +9,6 @@ import { onLogin } from '../../redux/actions'
 
 class App extends Component {
   state = {
-    // firstName: '',
-    // lastName: '',
     email: this.props.user.email || '',
     password: this.props.user.password || '',
     passwordConfirmation: '',
@@ -22,7 +20,7 @@ class App extends Component {
   }
 
 
-  Validation = (event) => {
+  validation = (event) => {
     const e = event;
     const valueKey = e.target.id;
     const value = e.target.value;
@@ -54,8 +52,8 @@ class App extends Component {
       }
     }
     return errors;
-
   }
+
   handleLogin = () => {
     const { errors, email, password } = this.state;
     if (!errors.email && !errors.password && email && password) {
@@ -67,36 +65,13 @@ class App extends Component {
   handleInput = (e) => {
     const updates = {};
     updates[e.target.id] = e.target.value;
+    console.log(e.target.value)
 
-    updates.errors = this.Validation(e)
+    updates.errors = this.validation(e)
     this.setState(updates)
 
   }
 
-  onButtonClick = () => {
-    const users = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      password: this.state.password,
-      passwordConfirmation: this.state.passwordConfirmation,
-    }
-
-
-    this.setState({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-      users,
-    })
-
-    localStorage.setItem('email', this.state.email)
-    localStorage.setItem('firstName', this.state.firstName)
-    localStorage.setItem('lastName', this.state.lastName)
-
-  }
 
   DisabledButton = () => {
     if (this.state.email !== '' && this.state.password !== '' && this.state.passwordConfirmation !== '') {
@@ -110,38 +85,12 @@ class App extends Component {
       password,
       passwordConfirmation,
       errors,
-      firstName,
-      lastName,
-
     } = this.state
+
     return (
       <S.Container>
         <S.Title>Register</S.Title>
         <S.FormContainer>
-
-          {/* <S.Label>First Name</S.Label>
-          <S.Input
-            placeholder='First Name'
-            value={firstName}
-            onChange={this.handleInput}
-            id='firstName'
-            type='text'
-          ></S.Input>
-
-          <S.Label>Last Name</S.Label>
-
-          <S.Input
-            placeholder='Last name'
-            value={lastName}
-            onChange={this.handleInput}
-            id='lastName'
-            type='text'
-
-
-          ></S.Input> */}
-
-
-
           <S.Label error={errors.email}>Email</S.Label>
           <S.Input
             error={errors.email}

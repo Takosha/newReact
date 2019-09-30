@@ -1,11 +1,13 @@
-
 import { createStore } from 'redux'
-import { LOGIN, OPEN_MODAL, CLOSE_MODAL } from './actions'
+import { LOGIN, OPEN_MODAL, CLOSE_MODAL, ADD_PET } from './actions'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 
 
 const initialState = {
     user: {},
+    pet: {},
+    isModalOpen: false,
 };
 
 
@@ -15,6 +17,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
+            }
+
+        case ADD_PET:
+            return {
+                ...state,
+                pet: action.payload,
             }
 
         case OPEN_MODAL:
@@ -36,6 +44,6 @@ const reducer = (state = initialState, action) => {
 
 }
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 
 export default store;

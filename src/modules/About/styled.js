@@ -2,20 +2,14 @@ import styled from 'styled-components'
 
 
 export const Title = styled.span`
-    font-size: 40px;
-    font-weight: 600;
+    font-size:40px;
+    font-weight:800;
     color: green;
 `
 export const Container = styled.div`
-    display: inline-grid;
-    position: absolute;
-    top: 20%;
-    left: 42%;  
 `
 export const Label = styled.label`
-    color: ${label => label.error ? 'red' : 'black'};
-    font-size: 15px;
-    font-weight: 350;
+    
 `
 
 export const FormContainer = styled.div`
@@ -23,6 +17,7 @@ export const FormContainer = styled.div`
 `
 
 export const Input = styled.input`
+display:block
     outline: ${input => input.error ? '1.5px solid red' : 'none'};
     :focus {
         background: #ffe;
@@ -31,7 +26,10 @@ export const Input = styled.input`
 
 export const Button = styled.button`
     margin-top: 5px;
-    
+
+`
+export const ButtonClose = styled.button`
+
 `
 
 export const InputError = styled.span`
@@ -40,8 +38,21 @@ export const InputError = styled.span`
     font-weight: 600;
 `
 export const Modal = styled.div`
-background-color: gray;
-width: 100%;
-height: 100%;
-opacity: 0.7;
+position: absolute;
+    top: 10%;
+    left: 33%;
+    width: 400px;
+    height: 350px;
+    background-color: pink;
+    border: 2px solid black;
+    box-shadow: 1px 1px 1px 1px grey;
+    visibility: ${ModalWindow => ModalWindow.visible ? 'visible' : 'hidden'};
+`
+export const ModalShadow = styled.div`
+ position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+    opacity: 0.7;
+    visibility: ${ModalWindow => ModalWindow.visible ? 'visible' : 'hidden'};
 `

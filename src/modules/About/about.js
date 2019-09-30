@@ -7,39 +7,72 @@ import { closeModal } from '../../redux/actions'
 
 
 class About extends Component {
+    state = {
+        petName: '',
+        age: '',
 
-    onOpenModal = () => {
-        this.setState(this.state.openModal)
-
-        console.log(this.props)
     }
-
-    onCloseModal = () => {
-        this.setState(this.props.closeModal)
-        console.log(2)
+    handleInput = (event) => {
+        const update = {};
+        update[event.target.id] = event.target.value
+        this.setState(update)
+        console.log(event.target.value)
     }
-
-    onButtonClick = () => {
-
+    handleAddPets = () => {
+        const { petName, age } = this.state;
+        this.props.onAdd({ petName, age })
     }
 
     render() {
+        const {
+            user,
+            isModalOpen
+        } = this.props
+
         return (
             <S.Container>
-                <S.Title>Привет! {this.props.user.email || ''}</S.Title>
-                <S.Button onClick={this.onOpenModal}>Add Pets</S.Button>
+                <S.Title>Привет! {user.email || ''}</S.Title>
+                <S.Button onClick={this.props.openModal}>Add Pets</S.Button>
+                <S.ModalShadow> onClick={this.props.closeModal}</S.ModalShadow>
+                <S.Modal visible={isModalOpen} >
+                    {
+                        isModalOpen
+                    }
+                    <S.Input
+                        id='petName'
+                        placeholder='Pet Name'
+                        type='text'
+                        value={this.state.petName}
+                        onChange={this.handleInput}
+                    >
 
-                <S.Modal >
-                    <S.Button onClick={this.onCloseModal}>Close</S.Button>
+                    </S.Input>
+
+                    <S.Input
+                        id='age'
+                        placeholder='Age'
+                        type='text'
+                        value={this.state.age}
+                        onChange={this.handleInput}
+                    >
+
+                    </S.Input>
+                    <S.Button onClick={this.handleAddPets}>Add Pet</S.Button>
+                    <S.Button onClick={this.props.closeModal}>Close</S.Button>
                 </S.Modal>
-            </S.Container>
+
+
+
+
+
+            </S.Container >
 
         );
     }
 }
 const mapStateToProps = (state) => ({
     user: state.user,
-    isModalOpen: false,
+    isModalOpen: state.isModalOpen,
 });
 
 const mapDispatchToProps = {

@@ -14,6 +14,7 @@ export const onAdd = (pet) => {
     return {
         type: ADD_PET,
         payload: pet,
+
     }
 }
 
